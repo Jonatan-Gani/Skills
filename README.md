@@ -49,6 +49,7 @@ loads skills from `~/.claude/skills` at session start.
 
 ```bash
 #!/bin/bash
+set +e
 SKILLS_DIR="$HOME/.claude/skills"
 REPO_DIR="$HOME/.claude/skills-src"
 
@@ -57,14 +58,20 @@ mkdir -p "$SKILLS_DIR"
 if [ -d "$REPO_DIR/.git" ]; then
   git -C "$REPO_DIR" pull --ff-only 2>/dev/null || true
 else
+  rm -rf "$REPO_DIR"
   git clone --depth 1 https://github.com/Jonatan-Gani/Skills "$REPO_DIR" 2>/dev/null || true
 fi
 
 # Flatten: copy every skill folder (any dir containing a SKILL.md, at any depth)
 # into ~/.claude/skills/. This is what makes the category folders dynamic.
-find "$REPO_DIR" -name SKILL.md -not -path '*/.git/*' -print0 | while IFS= read -r -d '' skillmd; do
-  cp -rf "$(dirname "$skillmd")" "$SKILLS_DIR/"
-done
+if [ -d "$REPO_DIR" ]; then
+  find "$REPO_DIR" -name SKILL.md -not -path '*/.git/*' -print0 2>/dev/null \
+    | while IFS= read -r -d '' skillmd; do
+        cp -rf "$(dirname "$skillmd")" "$SKILLS_DIR/" 2>/dev/null || true
+      done
+fi
+
+exit 0
 ```
 
 > **Why not clone straight onto `~/.claude/skills`?** The cloud VM ships that
