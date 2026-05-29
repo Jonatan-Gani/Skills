@@ -83,6 +83,7 @@ git submodule add https://github.com/Jonatan-Gani/Skills .claude/skills
 | [`thermo-nuclear-code-quality-review`](thermo-nuclear-code-quality-review/SKILL.md) | `/thermo-nuclear-code-quality-review` (manual only) | Extremely strict maintainability review — hunts giant files, spaghetti conditionals, and "code-judo" simplifications. | [Cursor team](https://github.com/cursor/plugins/tree/main/cursor-team-kit/skills/thermo-nuclear-code-quality-review) |
 | [`grill-me`](grill-me/SKILL.md) | `/grill-me` or auto | Interviews you relentlessly about a plan or design, one question at a time with a recommended answer each, walking the decision tree until shared understanding. | [Matt Pocock](https://github.com/mattpocock/) |
 | [`handoff`](handoff/SKILL.md) | `/handoff [focus]` or auto | Compacts the current conversation into a handoff document (saved to the OS temp dir) so a fresh agent can continue the work, including a suggested-skills section. | _unknown — TBD_ |
+| [`add-skill`](add-skill/SKILL.md) | `/add-skill` or auto | Adds a skill to this repo — registers an already-written skill (Mode A) or creates one from scratch with the full eval/benchmark/description-optimization loop (Mode B), then updates this README and pushes. | [Anthropic](https://github.com/anthropics/skills/tree/main/skills/skill-creator) (adapted — edited) |
 
 ## Credits
 
@@ -92,5 +93,10 @@ original creators:
 - **`thermo-nuclear-code-quality-review`** — by the **Cursor team**, from
   [cursor/plugins](https://github.com/cursor/plugins/tree/main/cursor-team-kit/skills/thermo-nuclear-code-quality-review).
 - **`grill-me`** — by **[Matt Pocock](https://github.com/mattpocock/)**.
+- **`add-skill`** — adapted from Anthropic's
+  [`skill-creator`](https://github.com/anthropics/skills/tree/main/skills/skill-creator)
+  (Apache-2.0; license preserved at `add-skill/LICENSE.txt`). **Edited for this
+  repo:** added an "add an existing skill" mode and the registration/commit/push
+  workflow; all original skill-creator functionality is preserved.
 
 Skills marked _(original)_ above were written by the repo owner.
