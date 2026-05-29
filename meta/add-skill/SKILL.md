@@ -25,9 +25,12 @@ run the create-from-scratch / eval loop in this case — just register it cleanl
    directory for supporting files (`scripts/`, `references/`, `assets/`, a
    `LICENSE`, etc.). If many files, clone/sparse-checkout rather than copy-paste.
    Vendor the whole skill directory, not just `SKILL.md`.
-2. **Create the folder at the repo root**, named exactly after the skill's
-   frontmatter `name` (folder name = `name`). Skills live at the repo root here,
-   not under a `skills/` subdir — see `README.md` for why.
+2. **Create the skill folder inside a category folder** (e.g. `programming/`,
+   `writing/`, `finance/`, `meta/` — pick the fitting one or create a new
+   category; categories are free-form). Name the skill folder exactly after the
+   frontmatter `name` (folder name = `name`), and keep that name **unique across
+   all categories** — the setup script flattens every skill into one
+   `~/.claude/skills/` directory. See `README.md` "Organization" for details.
 3. **Validate the frontmatter.** It must sit at the very TOP of `SKILL.md`
    (`name`, `description`; optional `argument-hint`, `disable-model-invocation`,
    `user-invocable`). Watch for upstream files that put a `# Heading` above the

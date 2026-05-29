@@ -2,19 +2,43 @@
 
 A single source of truth for my [Claude Code skills](https://code.claude.com/docs).
 
-Each skill lives in its own directory at the repo root, containing a `SKILL.md`
-(plus any scripts or assets that skill ships with). The **folder name must match
-the skill `name` in the frontmatter**.
+Each skill lives in its own directory containing a `SKILL.md` (plus any scripts
+or assets that skill ships with). The **folder name must match the skill `name`
+in the frontmatter**.
+
+## Organization (category folders)
+
+Skills are grouped into **category folders** purely for human organization. The
+categories are **dynamic** — add, rename, or nest them however you like; nothing
+else needs to change (see how loading works below).
 
 ```
 skills/
-  context-map-builder/
-    SKILL.md
-  humanizer/
-    SKILL.md
-  cover-letter/
-    SKILL.md
+  programming/
+    context-map-builder/
+      SKILL.md
+    thermo-nuclear-code-quality-review/
+      SKILL.md
+    grill-me/
+      SKILL.md
+  writing/
+    ...
+  finance/
+    ...
+  meta/
+    add-skill/
+      SKILL.md
+    handoff/
+      SKILL.md
 ```
+
+> **Important:** Claude Code does **not** discover skills nested under category
+> folders — it only loads a skill from a directory placed *directly* under
+> `~/.claude/skills/`. The setup script below bridges this by **flattening**: it
+> finds every `SKILL.md` at any depth and copies its folder into
+> `~/.claude/skills/`. That's what makes categories free-form. The only rule:
+> **skill folder names must be unique across categories** (they all flatten into
+> one directory).
 
 ## Use in the cloud (recommended)
 
@@ -36,9 +60,10 @@ else
   git clone --depth 1 https://github.com/Jonatan-Gani/Skills "$REPO_DIR" 2>/dev/null || true
 fi
 
-# Copy every skill folder (one that contains a SKILL.md) into ~/.claude/skills.
-for d in "$REPO_DIR"/*/; do
-  [ -f "${d}SKILL.md" ] && cp -rf "$d" "$SKILLS_DIR/"
+# Flatten: copy every skill folder (any dir containing a SKILL.md, at any depth)
+# into ~/.claude/skills/. This is what makes the category folders dynamic.
+find "$REPO_DIR" -name SKILL.md -not -path '*/.git/*' -print0 | while IFS= read -r -d '' skillmd; do
+  cp -rf "$(dirname "$skillmd")" "$SKILLS_DIR/"
 done
 ```
 
@@ -68,22 +93,27 @@ git submodule add https://github.com/Jonatan-Gani/Skills .claude/skills
 
 ## Adding a skill
 
-1. Create a directory named exactly after the skill's frontmatter `name`.
-2. Add a `SKILL.md` with valid frontmatter (`name`, `description`).
-3. Drop any supporting scripts/assets in the same directory.
-4. Commit and push.
+1. Pick (or create) a category folder, e.g. `programming/`, `writing/`, `meta/`.
+2. Inside it, create a directory named exactly after the skill's frontmatter
+   `name` — and keep that name unique across all categories.
+3. Add a `SKILL.md` with valid frontmatter (`name`, `description`) at the very top.
+4. Drop any supporting scripts/assets in the same skill directory.
+5. Add a row to the Skills table below (Category + Author/Source).
+6. Commit and push.
+
+The [`add-skill`](meta/add-skill/SKILL.md) skill automates this whole flow.
 
 ## Skills
 
 <!-- Keep this list in sync as skills are added. -->
 
-| Skill | Invoke | What it does | Author / Source |
-|---|---|---|---|
-| [`context-map-builder`](context-map-builder/SKILL.md) | `/context-map-builder` or auto | Generates `CLAUDE.md` context-map files (root + nested) that index a project's proprietary scripts by location, purpose, and data I/O. | [Jonatan-Gani](https://github.com/Jonatan-Gani) (original) |
-| [`thermo-nuclear-code-quality-review`](thermo-nuclear-code-quality-review/SKILL.md) | `/thermo-nuclear-code-quality-review` (manual only) | Extremely strict maintainability review — hunts giant files, spaghetti conditionals, and "code-judo" simplifications. | [Cursor team](https://github.com/cursor/plugins/tree/main/cursor-team-kit/skills/thermo-nuclear-code-quality-review) |
-| [`grill-me`](grill-me/SKILL.md) | `/grill-me` or auto | Interviews you relentlessly about a plan or design, one question at a time with a recommended answer each, walking the decision tree until shared understanding. | [Matt Pocock](https://github.com/mattpocock/) |
-| [`handoff`](handoff/SKILL.md) | `/handoff [focus]` or auto | Compacts the current conversation into a handoff document (saved to the OS temp dir) so a fresh agent can continue the work, including a suggested-skills section. | [Matt Pocock](https://github.com/mattpocock/) |
-| [`add-skill`](add-skill/SKILL.md) | `/add-skill` or auto | Adds a skill to this repo — registers an already-written skill (Mode A) or creates one from scratch with the full eval/benchmark/description-optimization loop (Mode B), then updates this README and pushes. | [Anthropic](https://github.com/anthropics/skills/tree/main/skills/skill-creator) (adapted — edited) |
+| Category | Skill | Invoke | What it does | Author / Source |
+|---|---|---|---|---|
+| programming | [`context-map-builder`](programming/context-map-builder/SKILL.md) | `/context-map-builder` or auto | Generates `CLAUDE.md` context-map files (root + nested) that index a project's proprietary scripts by location, purpose, and data I/O. | [Jonatan-Gani](https://github.com/Jonatan-Gani) (original) |
+| programming | [`thermo-nuclear-code-quality-review`](programming/thermo-nuclear-code-quality-review/SKILL.md) | `/thermo-nuclear-code-quality-review` (manual only) | Extremely strict maintainability review — hunts giant files, spaghetti conditionals, and "code-judo" simplifications. | [Cursor team](https://github.com/cursor/plugins/tree/main/cursor-team-kit/skills/thermo-nuclear-code-quality-review) |
+| programming | [`grill-me`](programming/grill-me/SKILL.md) | `/grill-me` or auto | Interviews you relentlessly about a plan or design, one question at a time with a recommended answer each, walking the decision tree until shared understanding. | [Matt Pocock](https://github.com/mattpocock/) |
+| meta | [`handoff`](meta/handoff/SKILL.md) | `/handoff [focus]` or auto | Compacts the current conversation into a handoff document (saved to the OS temp dir) so a fresh agent can continue the work, including a suggested-skills section. | [Matt Pocock](https://github.com/mattpocock/) |
+| meta | [`add-skill`](meta/add-skill/SKILL.md) | `/add-skill` or auto | Adds a skill to this repo — registers an already-written skill (Mode A) or creates one from scratch with the full eval/benchmark/description-optimization loop (Mode B), then updates this README and pushes. | [Anthropic](https://github.com/anthropics/skills/tree/main/skills/skill-creator) (adapted — edited) |
 
 ## Credits
 
@@ -96,7 +126,7 @@ original creators:
 - **`handoff`** — by **[Matt Pocock](https://github.com/mattpocock/)**.
 - **`add-skill`** — adapted from Anthropic's
   [`skill-creator`](https://github.com/anthropics/skills/tree/main/skills/skill-creator)
-  (Apache-2.0; license preserved at `add-skill/LICENSE.txt`). **Edited for this
+  (Apache-2.0; license preserved at `meta/add-skill/LICENSE.txt`). **Edited for this
   repo:** added an "add an existing skill" mode and the registration/commit/push
   workflow; all original skill-creator functionality is preserved.
 
