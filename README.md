@@ -23,7 +23,19 @@ The repo root *is* the skills directory, so clone it straight into
 
 ```bash
 #!/bin/bash
-git clone https://github.com/jonatan-gani/skills ~/.claude/skills 2>/dev/null || true
+SKILLS_DIR="$HOME/.claude/skills"
+if [ -d "$SKILLS_DIR/.git" ]; then
+  git -C "$SKILLS_DIR" pull --ff-only || true
+else
+  git clone https://github.com/Jonatan-Gani/Skills "$SKILLS_DIR" 2>/dev/null || true
+fi
+```
+
+If the repo is **private**, add a `GH_TOKEN` environment variable to the
+environment and clone with it instead:
+
+```bash
+git clone https://x-access-token:${GH_TOKEN}@github.com/Jonatan-Gani/Skills "$SKILLS_DIR"
 ```
 
 > **Caveat:** whether cloud Claude Code reads `~/.claude/skills` is undocumented.
@@ -38,7 +50,7 @@ vendor the skills into each project at `.claude/skills/` as a submodule pointing
 at this same repo (so there's still one source of truth):
 
 ```bash
-git submodule add https://github.com/jonatan-gani/skills .claude/skills
+git submodule add https://github.com/Jonatan-Gani/Skills .claude/skills
 ```
 
 ## Adding a skill
