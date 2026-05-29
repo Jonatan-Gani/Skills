@@ -122,6 +122,7 @@ The [`add-skill`](meta/add-skill/SKILL.md) skill automates this whole flow.
 | meta | [`handoff`](meta/handoff/SKILL.md) | `/handoff [focus]` or auto | Compacts the current conversation into a handoff document (saved to the OS temp dir) so a fresh agent can continue the work, including a suggested-skills section. | [Matt Pocock](https://github.com/mattpocock/) |
 | meta | [`add-skill`](meta/add-skill/SKILL.md) | `/add-skill` or auto | Adds a skill to this repo — registers an already-written skill (Mode A) or creates one from scratch with the full eval/benchmark/description-optimization loop (Mode B), then updates this README and pushes. | [Anthropic](https://github.com/anthropics/skills/tree/main/skills/skill-creator) (adapted — edited) |
 | productivity | [`caveman`](productivity/caveman/SKILL.md) | `/caveman` or auto | Ultra-compressed "caveman" communication mode — drops articles, filler, and pleasantries to cut token usage ~75% while keeping full technical accuracy, with auto-clarity exceptions for warnings and destructive actions. | [Matt Pocock](https://github.com/mattpocock/skills/tree/main/skills/productivity/caveman) |
+| writing | [`humanizer`](writing/humanizer/SKILL.md) | `/humanizer` or auto | Removes signs of AI-generated writing (em-dash overuse, rule of three, inflated significance, promotional language, AI vocabulary, filler/hedging, etc.) to make text sound natural and human, with a draft → audit → final rewrite loop. Based on Wikipedia's "Signs of AI writing" guide. | [blader](https://github.com/blader/humanizer) |
 
 ## Credits
 
@@ -134,6 +135,9 @@ original creators:
 - **`handoff`** — by **[Matt Pocock](https://github.com/mattpocock/)**.
 - **`caveman`** — by **[Matt Pocock](https://github.com/mattpocock/)**, from
   [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/productivity/caveman).
+- **`humanizer`** — by **[blader](https://github.com/blader/humanizer)** (MIT;
+  license preserved at `writing/humanizer/LICENSE`). Based on
+  [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing).
 - **`add-skill`** — adapted from Anthropic's
   [`skill-creator`](https://github.com/anthropics/skills/tree/main/skills/skill-creator)
   (Apache-2.0; license preserved at `meta/add-skill/LICENSE.txt`). **Edited for this
