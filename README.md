@@ -77,8 +77,19 @@ git submodule add https://github.com/Jonatan-Gani/Skills .claude/skills
 
 <!-- Keep this list in sync as skills are added. -->
 
-| Skill | Invoke | What it does |
-|---|---|---|
-| [`context-map-builder`](context-map-builder/SKILL.md) | `/context-map-builder` or auto | Generates `CLAUDE.md` context-map files (root + nested) that index a project's proprietary scripts by location, purpose, and data I/O. |
-| [`thermo-nuclear-code-quality-review`](thermo-nuclear-code-quality-review/SKILL.md) | `/thermo-nuclear-code-quality-review` (manual only) | Extremely strict maintainability review — hunts giant files, spaghetti conditionals, and "code-judo" simplifications. From [cursor/plugins](https://github.com/cursor/plugins/tree/main/cursor-team-kit/skills/thermo-nuclear-code-quality-review). |
-| [`grill-me`](grill-me/SKILL.md) | `/grill-me` or auto | Interviews you relentlessly about a plan or design, one question at a time with a recommended answer each, walking the decision tree until shared understanding. |
+| Skill | Invoke | What it does | Author / Source |
+|---|---|---|---|
+| [`context-map-builder`](context-map-builder/SKILL.md) | `/context-map-builder` or auto | Generates `CLAUDE.md` context-map files (root + nested) that index a project's proprietary scripts by location, purpose, and data I/O. | [Jonatan-Gani](https://github.com/Jonatan-Gani) (original) |
+| [`thermo-nuclear-code-quality-review`](thermo-nuclear-code-quality-review/SKILL.md) | `/thermo-nuclear-code-quality-review` (manual only) | Extremely strict maintainability review — hunts giant files, spaghetti conditionals, and "code-judo" simplifications. | [Cursor team](https://github.com/cursor/plugins/tree/main/cursor-team-kit/skills/thermo-nuclear-code-quality-review) |
+| [`grill-me`](grill-me/SKILL.md) | `/grill-me` or auto | Interviews you relentlessly about a plan or design, one question at a time with a recommended answer each, walking the decision tree until shared understanding. | [Matt Pocock](https://github.com/mattpocock/) |
+
+## Credits
+
+Skills authored by others are vendored here with attribution. All credit to their
+original creators:
+
+- **`thermo-nuclear-code-quality-review`** — by the **Cursor team**, from
+  [cursor/plugins](https://github.com/cursor/plugins/tree/main/cursor-team-kit/skills/thermo-nuclear-code-quality-review).
+- **`grill-me`** — by **[Matt Pocock](https://github.com/mattpocock/)**.
+
+Skills marked _(original)_ above were written by the repo owner.
