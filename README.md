@@ -123,6 +123,7 @@ The [`add-skill`](meta/add-skill/SKILL.md) skill automates this whole flow.
 | meta | [`add-skill`](meta/add-skill/SKILL.md) | `/add-skill` or auto | Adds a skill to this repo — registers an already-written skill (Mode A) or creates one from scratch with the full eval/benchmark/description-optimization loop (Mode B), then updates this README and pushes. | [Anthropic](https://github.com/anthropics/skills/tree/main/skills/skill-creator) (adapted — edited) |
 | productivity | [`caveman`](productivity/caveman/SKILL.md) | `/caveman` or auto | Ultra-compressed "caveman" communication mode — drops articles, filler, and pleasantries to cut token usage ~75% while keeping full technical accuracy, with auto-clarity exceptions for warnings and destructive actions. | [Matt Pocock](https://github.com/mattpocock/skills/tree/main/skills/productivity/caveman) |
 | writing | [`humanizer`](writing/humanizer/SKILL.md) | `/humanizer` or auto | Removes signs of AI-generated writing (em-dash overuse, rule of three, inflated significance, promotional language, AI vocabulary, filler/hedging, etc.) to make text sound natural and human, with a draft → audit → final rewrite loop. Based on Wikipedia's "Signs of AI writing" guide. | [blader](https://github.com/blader/humanizer) |
+| finance | [`sector-overview`](finance/sector-overview/SKILL.md) | `/sector-overview` or auto | Builds comprehensive industry/sector landscape reports — market sizing, industry structure, competitive landscape, valuation context, and investment implications — for sector initiations, thematic research, or client work. | [Anthropic](https://github.com/anthropics/financial-services/tree/main/plugins/vertical-plugins/equity-research/skills/sector-overview) |
 
 ## Credits
 
@@ -138,6 +139,9 @@ original creators:
 - **`humanizer`** — by **[blader](https://github.com/blader/humanizer)** (MIT;
   license preserved at `writing/humanizer/LICENSE`). Based on
   [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing).
+- **`sector-overview`** — by **[Anthropic](https://github.com/anthropics/financial-services)**,
+  from the [financial-services](https://github.com/anthropics/financial-services/tree/main/plugins/vertical-plugins/equity-research/skills/sector-overview)
+  equity-research plugin (Apache-2.0; license preserved at `finance/sector-overview/LICENSE`).
 - **`add-skill`** — adapted from Anthropic's
   [`skill-creator`](https://github.com/anthropics/skills/tree/main/skills/skill-creator)
   (Apache-2.0; license preserved at `meta/add-skill/LICENSE.txt`). **Edited for this
