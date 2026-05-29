@@ -1,24 +1,11 @@
 #!/bin/bash
-# Cloud environment setup: make these skills available to Claude Code in every
-# session on this environment. Paste this into the environment's "Setup script"
-# field (Settings -> environment -> Setup script).
+# Cloud setup script for Jonatan-Gani/Skills.
+# Intended to be run via: curl -fsSL https://raw.githubusercontent.com/Jonatan-Gani/Skills/main/setup.sh | bash
 #
-# This repo organizes skills into category folders (programming/, writing/,
-# finance/, meta/, ...) purely for human organization. Claude Code does NOT
-# discover skills nested under category folders -- it only loads a skill from a
-# directory placed DIRECTLY under ~/.claude/skills/. So we FLATTEN: find every
-# SKILL.md at any depth and copy its folder into ~/.claude/skills/.
-#
-# This makes categories fully dynamic: add, rename, or nest category folders
-# however you like and new skills are picked up automatically -- no edits here.
-#
-# NOTE: we clone to a side dir (not onto ~/.claude/skills) because the cloud VM
-# ships that folder pre-populated, so a direct clone would fail.
-#
-# This script is written to NEVER fail the session: every step tolerates errors
-# and it always exits 0. If the clone can't run (e.g. no network), skills just
-# won't update this session.
-
+# Claude Code only discovers a skill when its folder sits DIRECTLY under
+# ~/.claude/skills/ (i.e. ~/.claude/skills/<skill>/SKILL.md). This repo groups
+# skills into free-form category folders (programming/, writing/, finance/, ...),
+# so this script "flattens" every skill folder into ~/.claude/skills/.
 set +e
 
 SKILLS_DIR="$HOME/.claude/skills"
@@ -26,18 +13,32 @@ REPO_DIR="$HOME/.claude/skills-src"
 
 mkdir -p "$SKILLS_DIR"
 
+# 1. Get / update the source repo in a SIDE location. We never clone straight
+#    onto ~/.claude/skills because the cloud VM ships that folder pre-populated
+#    (bundled skills), which would make a direct clone fail.
 if [ -d "$REPO_DIR/.git" ]; then
   git -C "$REPO_DIR" pull --ff-only 2>/dev/null || true
 else
-  # Clear any partial/leftover dir so the clone can succeed cleanly.
   rm -rf "$REPO_DIR"
   git clone --depth 1 https://github.com/Jonatan-Gani/Skills "$REPO_DIR" 2>/dev/null || true
 fi
 
-# Flatten: copy every skill folder (any dir containing a SKILL.md, at any depth)
-# into ~/.claude/skills/. Guarded so a missing REPO_DIR (failed clone) can't
-# make the script exit non-zero. Folder name = the loaded skill name, so keep
-# skill folder names unique across categories.
+# 2. Clean up leftovers from any earlier (non-flattening) run. A real skill
+#    folder has SKILL.md DIRECTLY inside it; a stray category folder instead has
+#    SKILL.md one level down (category/<skill>/SKILL.md). Remove those category
+#    folders so nested, undiscoverable copies don't linger. This auto-handles
+#    future categories without hardcoding names, and never touches a real
+#    top-level skill (which has its own SKILL.md).
+for dir in "$SKILLS_DIR"/*/; do
+  [ -d "$dir" ] || continue
+  if [ ! -f "${dir}SKILL.md" ] && compgen -G "${dir}*/SKILL.md" > /dev/null 2>&1; then
+    rm -rf "$dir"
+  fi
+done
+
+# 3. Flatten: copy every skill folder (any dir containing a SKILL.md, at any
+#    depth) directly into ~/.claude/skills/. This is what makes the category
+#    folders dynamic.
 if [ -d "$REPO_DIR" ]; then
   find "$REPO_DIR" -name SKILL.md -not -path '*/.git/*' -print0 2>/dev/null \
     | while IFS= read -r -d '' skillmd; do
