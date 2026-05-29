@@ -121,6 +121,7 @@ The [`add-skill`](meta/add-skill/SKILL.md) skill automates this whole flow.
 | programming | [`grill-me`](programming/grill-me/SKILL.md) | `/grill-me` or auto | Interviews you relentlessly about a plan or design, one question at a time with a recommended answer each, walking the decision tree until shared understanding. | [Matt Pocock](https://github.com/mattpocock/) |
 | meta | [`handoff`](meta/handoff/SKILL.md) | `/handoff [focus]` or auto | Compacts the current conversation into a handoff document (saved to the OS temp dir) so a fresh agent can continue the work, including a suggested-skills section. | [Matt Pocock](https://github.com/mattpocock/) |
 | meta | [`add-skill`](meta/add-skill/SKILL.md) | `/add-skill` or auto | Adds a skill to this repo — registers an already-written skill (Mode A) or creates one from scratch with the full eval/benchmark/description-optimization loop (Mode B), then updates this README and pushes. | [Anthropic](https://github.com/anthropics/skills/tree/main/skills/skill-creator) (adapted — edited) |
+| productivity | [`caveman`](productivity/caveman/SKILL.md) | `/caveman` or auto | Ultra-compressed "caveman" communication mode — drops articles, filler, and pleasantries to cut token usage ~75% while keeping full technical accuracy, with auto-clarity exceptions for warnings and destructive actions. | [Matt Pocock](https://github.com/mattpocock/skills/tree/main/skills/productivity/caveman) |
 
 ## Credits
 
@@ -131,6 +132,8 @@ original creators:
   [cursor/plugins](https://github.com/cursor/plugins/tree/main/cursor-team-kit/skills/thermo-nuclear-code-quality-review).
 - **`grill-me`** — by **[Matt Pocock](https://github.com/mattpocock/)**.
 - **`handoff`** — by **[Matt Pocock](https://github.com/mattpocock/)**.
+- **`caveman`** — by **[Matt Pocock](https://github.com/mattpocock/)**, from
+  [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/productivity/caveman).
 - **`add-skill`** — adapted from Anthropic's
   [`skill-creator`](https://github.com/anthropics/skills/tree/main/skills/skill-creator)
   (Apache-2.0; license preserved at `meta/add-skill/LICENSE.txt`). **Edited for this
