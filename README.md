@@ -64,4 +64,6 @@ git submodule add https://github.com/Jonatan-Gani/Skills .claude/skills
 
 <!-- Keep this list in sync as skills are added. -->
 
-_None yet — add your first skill._
+| Skill | Invoke | What it does |
+|---|---|---|
+| [`context-map-builder`](context-map-builder/SKILL.md) | `/context-map-builder` or auto | Generates `CLAUDE.md` context-map files (root + nested) that index a project's proprietary scripts by location, purpose, and data I/O. |
