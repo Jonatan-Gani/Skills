@@ -119,6 +119,7 @@ The [`add-skill`](meta/add-skill/SKILL.md) skill automates this whole flow.
 | programming | [`context-map-builder`](programming/context-map-builder/SKILL.md) | `/context-map-builder` or auto | Generates `CLAUDE.md` context-map files (root + nested) that index a project's proprietary scripts by location, purpose, and data I/O. | [Jonatan-Gani](https://github.com/Jonatan-Gani) (original) |
 | programming | [`thermo-nuclear-code-quality-review`](programming/thermo-nuclear-code-quality-review/SKILL.md) | `/thermo-nuclear-code-quality-review` (manual only) | Extremely strict maintainability review — hunts giant files, spaghetti conditionals, and "code-judo" simplifications. | [Cursor team](https://github.com/cursor/plugins/tree/main/cursor-team-kit/skills/thermo-nuclear-code-quality-review) |
 | programming | [`grill-me`](programming/grill-me/SKILL.md) | `/grill-me` or auto | Interviews you relentlessly about a plan or design, one question at a time with a recommended answer each, walking the decision tree until shared understanding. | [Matt Pocock](https://github.com/mattpocock/) |
+| programming | [`tdd`](programming/tdd/SKILL.md) | `/tdd` or auto | Drives test-driven development with a strict vertical red-green-refactor loop (one test → one impl at a time), favoring behavior-focused integration tests; ships reference guides on deep modules, interface design, mocking, refactoring, and test quality. | [Matt Pocock](https://github.com/mattpocock/skills/tree/main/skills/engineering/tdd) |
 | meta | [`handoff`](meta/handoff/SKILL.md) | `/handoff [focus]` or auto | Compacts the current conversation into a handoff document (saved to the OS temp dir) so a fresh agent can continue the work, including a suggested-skills section. | [Matt Pocock](https://github.com/mattpocock/) |
 | meta | [`add-skill`](meta/add-skill/SKILL.md) | `/add-skill` or auto | Adds a skill to this repo — registers an already-written skill (Mode A) or creates one from scratch with the full eval/benchmark/description-optimization loop (Mode B), then updates this README and pushes. | [Anthropic](https://github.com/anthropics/skills/tree/main/skills/skill-creator) (adapted — edited) |
 | productivity | [`caveman`](productivity/caveman/SKILL.md) | `/caveman` or auto | Ultra-compressed "caveman" communication mode — drops articles, filler, and pleasantries to cut token usage ~75% while keeping full technical accuracy, with auto-clarity exceptions for warnings and destructive actions. | [Matt Pocock](https://github.com/mattpocock/skills/tree/main/skills/productivity/caveman) |
@@ -136,6 +137,9 @@ original creators:
 - **`handoff`** — by **[Matt Pocock](https://github.com/mattpocock/)**.
 - **`caveman`** — by **[Matt Pocock](https://github.com/mattpocock/)**, from
   [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/productivity/caveman).
+- **`tdd`** — by **[Matt Pocock](https://github.com/mattpocock/)** (MIT; license
+  preserved at `programming/tdd/LICENSE`), from
+  [mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/engineering/tdd).
 - **`humanizer`** — by **[blader](https://github.com/blader/humanizer)** (MIT;
   license preserved at `writing/humanizer/LICENSE`). Based on
   [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing).
