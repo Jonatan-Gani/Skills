@@ -18,34 +18,47 @@ skills/
 
 ## Use in the cloud (recommended)
 
-The repo root *is* the skills directory, so clone it straight into
-`~/.claude/skills`. Add this to your cloud environment's setup script:
+Add this to your cloud environment's **Setup script** field (Settings →
+environment → Setup script). It runs in every session on that environment, so
+every repo gets all skills with no per-repo work. Confirmed: cloud Claude Code
+loads skills from `~/.claude/skills` at session start.
 
 ```bash
 #!/bin/bash
 SKILLS_DIR="$HOME/.claude/skills"
-if [ -d "$SKILLS_DIR/.git" ]; then
-  git -C "$SKILLS_DIR" pull --ff-only || true
+REPO_DIR="$HOME/.claude/skills-src"
+
+mkdir -p "$SKILLS_DIR"
+
+if [ -d "$REPO_DIR/.git" ]; then
+  git -C "$REPO_DIR" pull --ff-only 2>/dev/null || true
 else
-  git clone https://github.com/Jonatan-Gani/Skills "$SKILLS_DIR" 2>/dev/null || true
+  git clone --depth 1 https://github.com/Jonatan-Gani/Skills "$REPO_DIR" 2>/dev/null || true
 fi
+
+# Copy every skill folder (one that contains a SKILL.md) into ~/.claude/skills.
+for d in "$REPO_DIR"/*/; do
+  [ -f "${d}SKILL.md" ] && cp -rf "$d" "$SKILLS_DIR/"
+done
 ```
+
+> **Why not clone straight onto `~/.claude/skills`?** The cloud VM ships that
+> folder pre-populated (e.g. the bundled `session-start-hook` skill), so a direct
+> `git clone … ~/.claude/skills` fails with *"destination path already exists and
+> is not an empty directory"* and silently installs nothing. Cloning to a side
+> location and copying each skill folder in avoids the collision and preserves
+> any pre-installed skills.
 
 If the repo is **private**, add a `GH_TOKEN` environment variable to the
-environment and clone with it instead:
+environment and swap the clone line for:
 
 ```bash
-git clone https://x-access-token:${GH_TOKEN}@github.com/Jonatan-Gani/Skills "$SKILLS_DIR"
+git clone --depth 1 https://x-access-token:${GH_TOKEN}@github.com/Jonatan-Gani/Skills "$REPO_DIR"
 ```
-
-> **Caveat:** whether cloud Claude Code reads `~/.claude/skills` is undocumented.
-> Test once — enable a session and type a trigger phrase for one of the skills.
-> If it loads, every repo using that environment gets all skills with no
-> per-repo work.
 
 ## Fallback: per-project submodule
 
-If the `~/.claude/skills` test fails, the guaranteed-but-tedious path is to
+If you prefer per-project vendoring, the alternative path is to
 vendor the skills into each project at `.claude/skills/` as a submodule pointing
 at this same repo (so there's still one source of truth):
 
