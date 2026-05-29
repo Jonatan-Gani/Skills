@@ -6,6 +6,15 @@
 # ~/.claude/skills/ (i.e. ~/.claude/skills/<skill>/SKILL.md). This repo groups
 # skills into free-form category folders (programming/, writing/, finance/, ...),
 # so this script "flattens" every skill folder into ~/.claude/skills/.
+#
+# History note: the prior commit message claimed this rewrite fixed "markdown-
+# fence corruption" and leftover category folders. That was a misdiagnosis from
+# garbled terminal output -- the previous setup.sh was already clean and the
+# install was already correctly flattened. The only real-world cause of "skills
+# missing in new sessions" is a STALE cached clone: this script re-pulls on each
+# run, so a fresh container/session picks up newly added skills automatically.
+# This version is functionally equivalent to the original, plus the step-2
+# defensive cleanup below (a harmless no-op when no category folders are present).
 set +e
 
 SKILLS_DIR="$HOME/.claude/skills"
