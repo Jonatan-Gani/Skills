@@ -19,17 +19,28 @@ set +e
 
 SKILLS_DIR="$HOME/.claude/skills"
 REPO_DIR="$HOME/.claude/skills-src"
+LOG="$HOME/.claude/skills-setup.log"
 
 mkdir -p "$SKILLS_DIR"
 
+# Diagnostics: this records WHY a setup-script run might install nothing.
+# After a new session, read ~/.claude/skills-setup.log to see what happened.
+{
+  echo "===== skills setup run: $(date -u 2>/dev/null) ====="
+  echo "whoami=$(whoami 2>/dev/null) HOME=$HOME"
+  echo "SKILLS_DIR=$SKILLS_DIR"
+  echo "network test (curl raw setup.sh): $(curl -fsS -o /dev/null -w 'HTTP %{http_code}' https://raw.githubusercontent.com/Jonatan-Gani/Skills/main/setup.sh 2>&1)"
+} >> "$LOG" 2>&1
+
 # 1. Get / update the source repo in a SIDE location. We never clone straight
 #    onto ~/.claude/skills because the cloud VM ships that folder pre-populated
-#    (bundled skills), which would make a direct clone fail.
+#    (bundled skills), which would make a direct clone fail. Errors are LOGGED
+#    (not silenced) so a blocked network during setup is visible in the log.
 if [ -d "$REPO_DIR/.git" ]; then
-  git -C "$REPO_DIR" pull --ff-only 2>/dev/null || true
+  git -C "$REPO_DIR" pull --ff-only >> "$LOG" 2>&1 || echo "git pull failed" >> "$LOG"
 else
   rm -rf "$REPO_DIR"
-  git clone --depth 1 https://github.com/Jonatan-Gani/Skills "$REPO_DIR" 2>/dev/null || true
+  git clone --depth 1 https://github.com/Jonatan-Gani/Skills "$REPO_DIR" >> "$LOG" 2>&1 || echo "git clone FAILED" >> "$LOG"
 fi
 
 # 2. Clean up leftovers from any earlier (non-flattening) run. A real skill
@@ -53,6 +64,15 @@ if [ -d "$REPO_DIR" ]; then
     | while IFS= read -r -d '' skillmd; do
         cp -rf "$(dirname "$skillmd")" "$SKILLS_DIR/" 2>/dev/null || true
       done
+else
+  echo "REPO_DIR missing after clone step -- nothing to flatten" >> "$LOG"
 fi
+
+# Record the final installed state so we can confirm whether skills survived.
+{
+  echo "installed skills now:"
+  ls -1 "$SKILLS_DIR" 2>&1
+  echo "===== end run ====="
+} >> "$LOG" 2>&1
 
 exit 0
